@@ -5,8 +5,8 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 
-TEXLIVE_DOMAIN="https://heroku-buildpack-tex.s3.amazonaws.com"
-VERSION=`curl $TEXLIVE_DOMAIN/VERSION -s`
+TEXLIVE_DOMAIN="https://heroku-buildpack-tex-mezis.s3.amazonaws.com"
+VERSION=`curl -k -L $TEXLIVE_DOMAIN/VERSION -s`
 TEXLIVE_URL="$TEXLIVE_DOMAIN/texlive-$VERSION.tar.gz"
 TEXLIVE_HOME=$BUILD_DIR/.texlive
 TEXLIVE_CACHE=$CACHE_DIR/.texlive
@@ -33,7 +33,7 @@ else
         build-step "Fetching TeX Live $VERSION"
     fi
 
-    curl $TEXLIVE_URL -s -o - | tar xzf - -C $TEXLIVE_HOME
+    curl -k -L $TEXLIVE_URL -s -o - | tar xzf - -C $TEXLIVE_HOME
 
     # Make sure the cache is empty
     rm -rf $TEXLIVE_CACHE/*
