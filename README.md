@@ -23,6 +23,14 @@ having to build or install it yourself. You can pull it up on your instance
 easily in bash:
 
     $ heroku run bash
+    
+Which TeXLive?
+--------------
+
+This buildpack uses TeXLive 2015-04-11, with:
+
+- collections: _basic_, _latex_, _latexrecommended_, and _fontutils_.
+- extra packages: _ec_, _float_, _eurosym_, _lm_.
 
 Multipacks
 ----------
