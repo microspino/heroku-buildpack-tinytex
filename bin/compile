@@ -22,7 +22,7 @@ mkdir -p $TEXLIVE_HOME
 mkdir -p $TEXLIVE_CACHE
 mkdir -p `dirname $PROFILE_D`
 
-if [ -f $TEXLIVE_CACHE/VERSION ] && (( $VERSION == `cat $TEXLIVE_CACHE/VERSION` )); then
+if [ -f $TEXLIVE_CACHE/VERSION ] && [ $VERSION = `cat $TEXLIVE_CACHE/VERSION` ] ; then
     # Get TeX Live from the cache if possible
     build-step "Installing TeX Live $VERSION from cache"
     cp -R $TEXLIVE_CACHE/* $TEXLIVE_HOME
