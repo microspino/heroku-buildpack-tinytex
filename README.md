@@ -29,8 +29,9 @@ Which TeXLive?
 
 This buildpack uses TeXLive 2015-04-11, with:
 
-- collections: _basic_, _latex_, _latexrecommended_, and _fontutils_.
-- extra packages: _ec_, _float_, _eurosym_, _lm_.
+- collections: _basic_, _latex_, _latexrecommended_, and _xetex_.
+- extra packages: _eurosym_, _tabto-ltx_, _vntex_.
+- removed packages: _amsfonts_, _koma-script_.
 
 Multipacks
 ----------
