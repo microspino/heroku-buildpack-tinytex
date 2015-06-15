@@ -5,12 +5,13 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 
+PLATFORM=$(uname -m)-$(uname -s | tr A-Z a-z)
 TEXLIVE_DOMAIN="https://heroku-buildpack-tex-mezis.s3.amazonaws.com"
 VERSION=`curl -k -L $TEXLIVE_DOMAIN/VERSION -s`
-TEXLIVE_URL="$TEXLIVE_DOMAIN/texlive-$VERSION.tar.gz"
+TEXLIVE_URL="$TEXLIVE_DOMAIN/texlive-$VERSION-$PLATFORM.tar.gz"
 TEXLIVE_HOME=$BUILD_DIR/.texlive
 TEXLIVE_CACHE=$CACHE_DIR/.texlive
-PATH=$TEXLIVE_HOME/bin/x86_64-linux:$PATH
+PATH=$TEXLIVE_HOME/bin/${PLATFORM}:$PATH
 PROFILE_D=$BUILD_DIR/.profile.d/texlive.sh
 
 # Output helpers
@@ -52,4 +53,4 @@ if [ ! `which pdflatex` ]; then
 fi
 
 # Set up the environment for runtimes now that compilation has finished
-echo 'export PATH=$HOME/.texlive/bin/x86_64-linux:$PATH' >> $PROFILE_D
+echo 'export PATH=$HOME/.texlive/bin/${ARCH}:$PATH' >> $PROFILE_D
