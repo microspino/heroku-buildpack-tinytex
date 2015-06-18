@@ -8,7 +8,7 @@ TeX Live environment into your Heroku app and doesn't do anything else with it.
 
     $ ls
 
-    $ heroku create --buildpack git://github.com/holiture/heroku-buildpack-tex.git
+    $ heroku create --buildpack git://github.com/mezis/heroku-buildpack-tex.git
 
     $ git push heroku master
     ...
@@ -67,7 +67,7 @@ where this is just one of the buildpacks you'll be working with.
 
     $ cat .buildpacks
     git://github.com/heroku/heroku-buildpack-python.git
-    git://github.com/holiture/heroku-buildpack-tex.git
+    git://github.com/mezis/heroku-buildpack-tex.git
 
     $ heroku config:add BUILDPACK_URL=git://github.com/ddollar/heroku-buildpack-multi.git
 
