@@ -52,7 +52,7 @@ The `install.sh` script is hosted with the buildpack binaries; to install, just
 This will by default install the current version to `./vendor/texlive`.
 You can specify a particular version or prefix:
 
-    curl -skL https://goo.gl/FR7t9V | bass -s -- -v 20150411-p0 -p /opt/texlive
+    curl -skL https://goo.gl/FR7t9V | bash -s -- -v 20150411-p0 -p /opt/texlive
 
 
 
