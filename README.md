@@ -54,6 +54,8 @@ You can specify a particular version or prefix:
 
     curl -skL https://goo.gl/FR7t9V | bash -s -- -v 20150411-p0 -p /opt/texlive
 
+Binaries are provided for `x86_64-linux` and `x86_64-darwin`.
+
 
 
 Multipacks
