@@ -13,11 +13,11 @@ PATH=$TEXLIVE_HOME/bin/${PLATFORM}:$PATH
 PROFILE_D=$BUILD_DIR/.profile.d/texlive.sh
 
 if test -e $VERSION_STAMP ; then
-  VERSION=$(VERSION_STAMP)
-    build-step "Using specified TeX Live version: $VERSION"
+  VERSION=$(cat $VERSION_STAMP)
+  build-step "Using specified TeX Live version: $VERSION"
 else
   VERSION=`curl -k -L $TEXLIVE_DOMAIN/VERSION -s`
-    build-step "Defaulting to buildpack's TeX Live version: $VERSION"
+  build-step "Defaulting to buildpack's TeX Live version: $VERSION"
 fi
 
 TEXLIVE_URL="$TEXLIVE_DOMAIN/texlive-$VERSION-$PLATFORM.tar.gz"
