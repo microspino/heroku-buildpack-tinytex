@@ -12,6 +12,9 @@ TEXLIVE_CACHE=$CACHE_DIR/.texlive
 PATH=$TEXLIVE_HOME/bin/${PLATFORM}:$PATH
 PROFILE_D=$BUILD_DIR/.profile.d/texlive.sh
 
+# Output helpers
+source $BIN_DIR/utils
+
 if test -e $VERSION_STAMP ; then
   VERSION=$(cat $VERSION_STAMP)
   build-step "Using specified TeX Live version: $VERSION"
@@ -21,9 +24,6 @@ else
 fi
 
 TEXLIVE_URL="$TEXLIVE_DOMAIN/texlive-$VERSION-$PLATFORM.tar.gz"
-
-# Output helpers
-source $BIN_DIR/utils
 
 # Prepare the various paths
 mkdir -p $TEXLIVE_HOME
