@@ -23,15 +23,38 @@ having to build or install it yourself. You can pull it up on your instance
 easily in bash:
 
     $ heroku run bash
-    
+
+
 Which TeXLive?
 --------------
 
-This buildpack uses TeXLive 2015-04-11, with:
+This buildpack allow to install multiple variants of TeX Live.
+Those are built with the `built.sh` script, and uploaded to S3.
 
-- collections: _basic_, _latex_, _latexrecommended_, and _xetex_.
-- extra packages: _eurosym_, _tabto-ltx_, _vntex_.
-- removed packages: _amsfonts_, _koma-script_.
+| Version       | Collections                     | Added packages            | Removed packages      |
+|---------------|---------------------------------|---------------------------|-----------------------|
+| `20150411-p2` | basic, latex, latexrec, xetex   | eurosym, tabto-ltx, vntex | amsfonts, koma-script |
+| `20150617-p0` | basic, latex, latexrec, xetex   | eurosym, tabto-ltx, vntex | amsfonts, koma-script |
+
+The **default** version is currently `20150411-p2`.
+
+
+Installing locally
+------------------
+
+It can be useful to run the exact same binaries locally (or for instance, on a
+CI server).
+
+The `install.sh` script is hosted with the buildpack binaries; to install, just
+
+    curl -skL https://goo.gl/FR7t9V | bash
+
+This will by default install the current version to `./vendor/texlive`.
+You can specify a particular version or prefix:
+
+    curl -skL https://goo.gl/FR7t9V | bass -s -- -v 20150411-p0 -p /opt/texlive
+
+
 
 Multipacks
 ----------
