@@ -38,6 +38,7 @@ Those are built with the `built.sh` script, and uploaded to S3.
 
 The **default** version is currently `20150411-p2`.
 
+This can be overriden by specifying one of the versions above in `.texlive-version` in your repository.
 
 Installing locally
 ------------------
