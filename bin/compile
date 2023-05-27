@@ -17,6 +17,7 @@ source $BINDIR/utils
 
 mkdir -p $TINYTEX_HOME
 
+cd ./bin
 tar -vzxf tiny-tex-installer-unix.tar.gz
 ./install.sh
 
