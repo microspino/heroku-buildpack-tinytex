@@ -29,7 +29,7 @@ rm TinyTeX.tar.gz
 build-step "TinyTex saved to $(dirname $TINYTEX_HOME)"
 build-step "Displaying content of tinytex folder:\n $(ls $TINYTEX_HOME)"
 
-cd $TINYTEX_HOME/bin/*/
+cd $TINYTEX_HOME/bin
 ./tlmgr option sys_bin $BINDIR
 ./tlmgr postaction install script xetex
 ./tlmgr option repository ctan
