@@ -17,13 +17,8 @@ source $BINDIR/utils
 
 mkdir -p $TINYTEX_HOME
 
-ls -alh .
-cd $TINYTEX_HOME
 tar -vzxf tiny-tex-installer-unix.tar.gz
-
-build-step "TinyTex saved to $(dirname $TINYTEX_HOME)"
-
-ls -alh .
+./install.sh
 
 ./bin/tlmgr option sys_bin $BINDIR
 ./bin/tlmgr postaction install script xetex
