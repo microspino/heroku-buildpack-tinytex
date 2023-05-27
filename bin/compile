@@ -25,7 +25,10 @@ TINYTEX_URL="https://github.com/rstudio/tinytex-releases/releases/download/daily
 wget --retry-connrefused --progress=dot:giga -O TinyTeX.tar.gz ${TINYTEX_URL}.tar.gz
 tar xf TinyTeX.tar.gz -C $(dirname $TINYTEX_HOME)
 rm TinyTeX.tar.gz
-    
+
+build-step "TinyTex saved to $(dirname $TINYTEX_HOME)"
+build-step "Displaying content of tinytex folder:\n $(ls $TINYTEX_HOME)"
+
 cd $TINYTEX_HOME/bin/*/
 ./tlmgr option sys_bin $BINDIR
 ./tlmgr postaction install script xetex
