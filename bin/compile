@@ -43,13 +43,13 @@ else
     
     # curl -k -L $TINYTEX_URL -s -o - | tar xzf - -C $TINYTEX_HOME
     
-    build-step "Removing old tinytex cached vers."
-    rm -rf $TINYTEX_CACHE/*
-    
-    build-step "Copying new tinytex vers. into cache"
-    cp -R $TINYTEX_HOME/* $TINYTEX_CACHE
-    
-    echo $VERSION > $TINYTEX_CACHE/VERSION
+    # build-step "Removing old tinytex cached vers."
+    # rm -rf $TINYTEX_CACHE/*
+    #
+    # build-step "Copying new tinytex vers. into cache"
+    # cp -R $TINYTEX_HOME/* $TINYTEX_CACHE
+    #
+    # echo $VERSION > $TINYTEX_CACHE/VERSION
 fi
 
 if [ ! `which pdflatex` ]; then
