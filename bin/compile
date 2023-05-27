@@ -5,56 +5,36 @@ set -e
 
 BUILD_DIR=$1
 CACHE_DIR=$2
-BIN_DIR=$(cd $(dirname $0); pwd)
+BINDIR=$(cd $(dirname $0); pwd)
 VERSION_STAMP=$BUILD_DIR/.TINYTEX-version
 PLATFORM=$(uname -m)-$(uname -s | tr A-Z a-z)
 TINYTEX_HOME=$BUILD_DIR/.TinyTeX
 TINYTEX_CACHE=$CACHE_DIR/.TinyTeX_Cache
 PATH=$TINYTEX_HOME/bin/${PLATFORM}:$PATH
-PROFILE_D=$BUILD_DIR/.profile.d/TINYTEX.sh
+# PROFILE_D=$BUILD_DIR/.profile.d/TINYTEX.sh
 
-source $BIN_DIR/utils
-
-if test -e $VERSION_STAMP ; then
-  VERSION=$(cat $VERSION_STAMP)
-  build-step "Using specified TinyTex version: $VERSION"
-else
-  build-step "Defaulting to buildpack's TinyTex version"
-fi
+source $BINDIR/utils
 
 mkdir -p $TINYTEX_HOME
 mkdir -p $TINYTEX_CACHE
 mkdir -p `dirname $PROFILE_D`
 
-if [ -f $TINYTEX_CACHE/VERSION ] && [ $VERSION = `cat $TINYTEX_CACHE/VERSION` ] ; then
-    # Get TinyTex from the cache if possible
-    build-step "Installing TinyTex $VERSION from cache"
-    cp -R $TINYTEX_CACHE/* $TINYTEX_HOME
-else
-    # Get TinyTex from S3 if necessary
-    if [ -f "$TINYTEX_CACHE/VERSION" ]; then
-        build-step "Upgrading to TinyTex $VERSION"
-    else
-        build-step "Fetching TinyTex $VERSION"
-    fi
+build-step "Fetching TinyTex $VERSION"
+
+TINYTEX_URL="https://github.com/rstudio/tinytex-releases/releases/download/daily/$TINYTEX_INSTALLER"
+wget --retry-connrefused --progress=dot:giga -O TinyTeX.tar.gz ${TINYTEX_URL}.tar.gz
+tar xf TinyTeX.tar.gz -C $(dirname $TINYTEX_HOME)
+rm TinyTeX.tar.gz
     
-    build-step "Dwonloading and running install-bin-unix from tinytex repo"
-    curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
-    
-    # curl -k -L $TINYTEX_URL -s -o - | tar xzf - -C $TINYTEX_HOME
-    
-    # build-step "Removing old tinytex cached vers."
-    # rm -rf $TINYTEX_CACHE/*
-    #
-    # build-step "Copying new tinytex vers. into cache"
-    # cp -R $TINYTEX_HOME/* $TINYTEX_CACHE
-    #
-    # echo $VERSION > $TINYTEX_CACHE/VERSION
-fi
+cd $TINYTEX_HOME/bin/*/
+./tlmgr option sys_bin $BINDIR
+./tlmgr postaction install script xetex
+./tlmgr option repository ctan
+./tlmgr path add
 
 if [ ! `which pdflatex` ]; then
     build-warn "TinyTex installation failed"
     exit 1
 fi
 
-echo "export PATH=\$HOME/.TINYTEX/bin/${PLATFORM}:\$PATH" >> $PROFILE_D
+# echo "export PATH=\$TINYTEX_HOME/bin/${PLATFORM}:\$PATH" >> $PROFILE_D
