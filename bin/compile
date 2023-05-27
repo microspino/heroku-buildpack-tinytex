@@ -15,9 +15,9 @@ cd ./bin
 
 ls -alh
 
-ls -alh texlive
+ls -alh texlive/bin
 
-export PATH="$BINDIR/texlive:$PATH"
+export PATH="$BINDIR/texlive/bin:$PATH"
 
 if [ ! `which pdflatex` ]; then
     build-warn "Cannot find pdflatex! TinyTex installation failed."
