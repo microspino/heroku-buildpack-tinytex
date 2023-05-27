@@ -6,20 +6,20 @@ set -e
 BUILD_DIR=$1
 CACHE_DIR=$2
 BINDIR=$(cd $(dirname $0); pwd)
-VERSION_STAMP=$BUILD_DIR/.TINYTEX-version
+# VERSION_STAMP=$BUILD_DIR/.TINYTEX-version
 PLATFORM=$(uname -m)-$(uname -s | tr A-Z a-z)
 TINYTEX_HOME=$BUILD_DIR/.TinyTeX
-TINYTEX_CACHE=$CACHE_DIR/.TinyTeX_Cache
+# TINYTEX_CACHE=$CACHE_DIR/.TinyTeX_Cache
 PATH=$TINYTEX_HOME/bin/${PLATFORM}:$PATH
 # PROFILE_D=$BUILD_DIR/.profile.d/TINYTEX.sh
 
 source $BINDIR/utils
 
 mkdir -p $TINYTEX_HOME
-mkdir -p $TINYTEX_CACHE
+# mkdir -p $TINYTEX_CACHE
 # mkdir -p `dirname $PROFILE_D`
 
-build-step "Fetching TinyTex $VERSION"
+build-step "Fetching TinyTex $VERSION for $PLATFORM"
 
 TINYTEX_URL="https://github.com/rstudio/tinytex-releases/releases/download/daily/installer-unix"
 wget --retry-connrefused --progress=dot:giga -O TinyTeX.tar.gz ${TINYTEX_URL}.tar.gz
@@ -27,7 +27,7 @@ tar xf TinyTeX.tar.gz -C $(dirname $TINYTEX_HOME)
 rm TinyTeX.tar.gz
 
 build-step "TinyTex saved to $(dirname $TINYTEX_HOME)"
-build-step "Displaying content of tinytex folder:\n $(ls $TINYTEX_HOME)"
+build-step "Displaying content of tinytex folder: $(ls $BUILD_DIR)"
 
 cd $TINYTEX_HOME/bin
 ./tlmgr option sys_bin $BINDIR
