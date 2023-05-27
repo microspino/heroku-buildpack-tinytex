@@ -22,11 +22,10 @@ ls -alh texlive
 build-step "Current $HOME content"
 ls -alh $HOME
 
-build-step "Current $HOME/.TinyTeX content"
-ls -alh $HOME/.TinyTeX
+build-step "Current $('./bin/*/tlmgr') content"
+ls -alh ./bin/*/tlmgr
 
-
-export PATH="$HOME/.TinyTeX/bin:$PATH"
+alias pdflatex='./bin/*/pdflatex'
 
 if [ ! `which pdftex` ]; then
     build-warn "Cannot find pdftex!"
