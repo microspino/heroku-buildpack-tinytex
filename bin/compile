@@ -1,67 +1,55 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-# Abort on errors!
 set -e
 
 BUILD_DIR=$1
 CACHE_DIR=$2
-BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
-VERSION_STAMP=$BUILD_DIR/.texlive-version
+BIN_DIR=$(cd $(dirname $0); pwd)
+VERSION_STAMP=$BUILD_DIR/.TINYTEX-version
 PLATFORM=$(uname -m)-$(uname -s | tr A-Z a-z)
-TEXLIVE_DOMAIN="https://heroku-buildpack-tex-mezis.s3.amazonaws.com"
-TEXLIVE_HOME=$BUILD_DIR/.texlive
-TEXLIVE_CACHE=$CACHE_DIR/.texlive
-PATH=$TEXLIVE_HOME/bin/${PLATFORM}:$PATH
-PROFILE_D=$BUILD_DIR/.profile.d/texlive.sh
+TINYTEX_HOME=$BUILD_DIR/.TinyTeX
+TINYTEX_CACHE=$CACHE_DIR/.TinyTeX_Cache
+PATH=$TINYTEX_HOME/bin/${PLATFORM}:$PATH
+PROFILE_D=$BUILD_DIR/.profile.d/TINYTEX.sh
 
-# Output helpers
 source $BIN_DIR/utils
 
 if test -e $VERSION_STAMP ; then
   VERSION=$(cat $VERSION_STAMP)
-  build-step "Using specified TeX Live version: $VERSION"
+  build-step "Using specified TinyTex version: $VERSION"
 else
-  VERSION=`curl -k -L $TEXLIVE_DOMAIN/VERSION -s`
-  build-step "Defaulting to buildpack's TeX Live version: $VERSION"
+  build-step "Defaulting to buildpack's TinyTex version"
 fi
 
-TEXLIVE_URL="$TEXLIVE_DOMAIN/texlive-$VERSION-$PLATFORM.tar.gz"
-
-# Prepare the various paths
-mkdir -p $TEXLIVE_HOME
-mkdir -p $TEXLIVE_CACHE
+mkdir -p $TINYTEX_HOME
+mkdir -p $TINYTEX_CACHE
 mkdir -p `dirname $PROFILE_D`
 
-if [ -f $TEXLIVE_CACHE/VERSION ] && [ $VERSION = `cat $TEXLIVE_CACHE/VERSION` ] ; then
-    # Get TeX Live from the cache if possible
-    build-step "Installing TeX Live $VERSION from cache"
-    cp -R $TEXLIVE_CACHE/* $TEXLIVE_HOME
+if [ -f $TINYTEX_CACHE/VERSION ] && [ $VERSION = `cat $TINYTEX_CACHE/VERSION` ] ; then
+    # Get TinyTex from the cache if possible
+    build-step "Installing TinyTex $VERSION from cache"
+    cp -R $TINYTEX_CACHE/* $TINYTEX_HOME
 else
-    # Get TeX Live from S3 if necessary
-    if [ -f "$TEXLIVE_CACHE/VERSION" ]; then
-        build-step "Upgrading to TeX Live $VERSION"
+    # Get TinyTex from S3 if necessary
+    if [ -f "$TINYTEX_CACHE/VERSION" ]; then
+        build-step "Upgrading to TinyTex $VERSION"
     else
-        build-step "Fetching TeX Live $VERSION"
+        build-step "Fetching TinyTex $VERSION"
     fi
 
-    curl -k -L $TEXLIVE_URL -s -o - | tar xzf - -C $TEXLIVE_HOME
+    wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
 
-    # Make sure the cache is empty
-    rm -rf $TEXLIVE_CACHE/*
+    rm -rf $TINYTEX_CACHE/*
 
-    # Store a copy of it in the cache so it doesn't have to be fetched again
-    cp -R $TEXLIVE_HOME/* $TEXLIVE_CACHE
+    cp -R $TINYTEX_HOME/* $TINYTEX_CACHE
 
-    # Store the version for later
-    echo $VERSION > $TEXLIVE_CACHE/VERSION
+    echo $VERSION > $TINYTEX_CACHE/VERSION
 fi
 
-# Check for an essential binary to make sure it's installed
 if [ ! `which pdflatex` ]; then
-    build-warn "TeX Live installation failed"
+    build-warn "TinyTex installation failed"
     exit 1
 fi
 
-# Set up the environment for runtimes now that compilation has finished
-echo "export PATH=\$HOME/.texlive/bin/${PLATFORM}:\$PATH" >> $PROFILE_D
+echo "export PATH=\$HOME/.TINYTEX/bin/${PLATFORM}:\$PATH" >> $PROFILE_D
