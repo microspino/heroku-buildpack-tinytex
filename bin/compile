@@ -18,10 +18,10 @@ cd ./bin
 tar -vzxf tiny-tex-installer-unix.tar.gz
 ./install.sh
 
-./tlmgr option sys_bin $BINDIR
-./tlmgr postaction install script xetex
-./tlmgr option repository ctan
-./tlmgr path add
+tlmgr option sys_bin $BINDIR
+tlmgr postaction install script xetex
+tlmgr option repository ctan
+tlmgr path add
 
 if [ ! `which pdflatex` ]; then
     build-warn "TinyTex installation failed"
