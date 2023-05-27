@@ -37,15 +37,18 @@ else
     else
         build-step "Fetching TinyTex $VERSION"
     fi
-
+    
+    build-step "Dwonloading and running install-bin-unix from tinytex repo"
     curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
     
     # curl -k -L $TINYTEX_URL -s -o - | tar xzf - -C $TINYTEX_HOME
-
+    
+    build-step "Removing old tinytex cached vers."
     rm -rf $TINYTEX_CACHE/*
-
+    
+    build-step "Copying new tinytex vers. into cache"
     cp -R $TINYTEX_HOME/* $TINYTEX_CACHE
-
+    
     echo $VERSION > $TINYTEX_CACHE/VERSION
 fi
 
