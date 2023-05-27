@@ -7,19 +7,19 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 BINDIR=$(cd $(dirname $0); pwd)
 PLATFORM=$(uname -m)-$(uname -s | tr A-Z a-z)
-# TINYTEX_HOME=$BUILD_DIR/TinyTeX
-# PATH=$TINYTEX_HOME/bin/${PLATFORM}:$PATH
 
 source $BINDIR/utils
-
-# mkdir -p $TINYTEX_HOME
 
 cd ./bin
 ./install.sh
 
+ls -al
+
+export PATH=$BINDIR:$PATH
+
 if [ ! `which pdflatex` ]; then
-    build-warn "TinyTex installation failed"
+    build-warn "Cannot find TinyTex installation failed"
     exit 1
 fi
 
-# echo "export PATH=\$TINYTEX_HOME/bin/${PLATFORM}:\$PATH" >> $PROFILE_D
+
