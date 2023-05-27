@@ -17,7 +17,9 @@ source $BINDIR/utils
 
 mkdir -p $TINYTEX_HOME
 
-tar xf tiny-tex-installer-unix.tar.gz
+ls -alh .
+cd $TINYTEX_HOME
+tar -vzxf tiny-tex-installer-unix.tar.gz
 
 build-step "TinyTex saved to $(dirname $TINYTEX_HOME)"
 
