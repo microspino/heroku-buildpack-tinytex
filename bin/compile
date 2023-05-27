@@ -13,11 +13,21 @@ source $BINDIR/utils
 cd ./bin
 ./install.sh
 
+build-step "Current pwd content"
 ls -alh
 
-ls -alh texlive/bin
+build-step "Current texlive content"
+ls -alh texlive
+
+build-step "Current $HOME/bin content"
+ls -alh $HOME/bin
 
 export PATH="$BINDIR/texlive/bin:$PATH"
+
+if [ ! `which pdftex` ]; then
+    build-warn "Cannot find pdftex!"
+    exit 1
+fi
 
 if [ ! `which pdflatex` ]; then
     build-warn "Cannot find pdflatex! TinyTex installation failed."
