@@ -17,7 +17,7 @@ source $BINDIR/utils
 
 mkdir -p $TINYTEX_HOME
 mkdir -p $TINYTEX_CACHE
-mkdir -p `dirname $PROFILE_D`
+# mkdir -p `dirname $PROFILE_D`
 
 build-step "Fetching TinyTex $VERSION"
 
