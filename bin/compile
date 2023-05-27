@@ -19,11 +19,13 @@ mkdir -p $TINYTEX_HOME
 # mkdir -p $TINYTEX_CACHE
 # mkdir -p `dirname $PROFILE_D`
 
-build-step "Fetching TinyTex $VERSION for $PLATFORM"
+build-step "Fetching TinyTex for $PLATFORM"
 
-cd $TINYTEX_HOME
 TINYTEX_URL="https://github.com/rstudio/tinytex-releases/releases/download/daily/installer-unix"
 wget --retry-connrefused --progress=dot:giga -O TinyTeX.tar.gz ${TINYTEX_URL}.tar.gz
+
+ls -alh .
+
 tar xf TinyTeX.tar.gz -C $(dirname $TINYTEX_HOME)
 rm TinyTeX.tar.gz
 
