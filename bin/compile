@@ -19,10 +19,14 @@ ls -alh
 build-step "Current texlive content"
 ls -alh texlive
 
-build-step "Current $HOME/bin content"
-ls -alh $HOME/bin
+build-step "Current $HOME content"
+ls -alh $HOME
 
-export PATH="$BINDIR/texlive/bin:$PATH"
+build-step "Current $HOME/.TinyTeX content"
+ls -alh $HOME/.TinyTeX
+
+
+export PATH="$HOME/.TinyTeX/bin:$PATH"
 
 if [ ! `which pdftex` ]; then
     build-warn "Cannot find pdftex!"
