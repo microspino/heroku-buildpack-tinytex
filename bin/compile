@@ -38,7 +38,9 @@ else
         build-step "Fetching TinyTex $VERSION"
     fi
 
-    wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+    curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+    
+    # curl -k -L $TINYTEX_URL -s -o - | tar xzf - -C $TINYTEX_HOME
 
     rm -rf $TINYTEX_CACHE/*
 
