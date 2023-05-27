@@ -21,6 +21,7 @@ mkdir -p $TINYTEX_HOME
 
 build-step "Fetching TinyTex $VERSION for $PLATFORM"
 
+cd $TINYTEX_HOME
 TINYTEX_URL="https://github.com/rstudio/tinytex-releases/releases/download/daily/installer-unix"
 wget --retry-connrefused --progress=dot:giga -O TinyTeX.tar.gz ${TINYTEX_URL}.tar.gz
 tar xf TinyTeX.tar.gz -C $(dirname $TINYTEX_HOME)
@@ -29,7 +30,7 @@ rm TinyTeX.tar.gz
 build-step "TinyTex saved to $(dirname $TINYTEX_HOME)"
 build-step "Displaying content of tinytex folder: $(ls -alh $BUILD_DIR)"
 
-cd $TINYTEX_HOME/bin
+cd ./bin
 ./tlmgr option sys_bin $BINDIR
 ./tlmgr postaction install script xetex
 ./tlmgr option repository ctan
