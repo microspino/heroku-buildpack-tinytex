@@ -33,11 +33,10 @@ build-step "TinyTex saved to $(dirname $TINYTEX_HOME)"
 
 ls -alh .
 
-cd $TINYTEX_HOME/bin
-./tlmgr option sys_bin $BINDIR
-./tlmgr postaction install script xetex
-./tlmgr option repository ctan
-./tlmgr path add
+./bin/tlmgr option sys_bin $BINDIR
+./bin/tlmgr postaction install script xetex
+./bin/tlmgr option repository ctan
+./bin/tlmgr path add
 
 if [ ! `which pdflatex` ]; then
     build-warn "TinyTex installation failed"
